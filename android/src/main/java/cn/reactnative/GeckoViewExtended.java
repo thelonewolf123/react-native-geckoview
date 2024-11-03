@@ -362,7 +362,7 @@ public class GeckoViewExtended extends GeckoView implements WebExtension.Message
                     e -> Log.e("ExtensionInit", "Error initializing extension", e)
                 );
         } else {
-            Log.i("GeckoView is not ready!");
+            Log.i("ExtensionInit", "GeckoView is not ready!");
         }
     }
 }
