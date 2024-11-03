@@ -3,7 +3,7 @@ def DEFAULT_BUILD_TOOLS_VERSION = '31.0.0'
 def DEFAULT_MIN_SDK_VERSION = 21
 def DEFAULT_TARGET_SDK_VERSION = 31
 // https://maven.mozilla.org/?prefix=maven2/org/mozilla/geckoview/geckoview/
-def DEFAULT_GECKOVIEW_VERSION = '132.0.20241021175835'
+def DEFAULT_GECKOVIEW_VERSION = '131.0.20241011205646'
 
 def safeExtGet(prop, fallback) {
     rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
@@ -15,13 +15,9 @@ buildscript {
 
     if (project == rootProject) {
         repositories {
-            maven {
-                url "https://maven.mozilla.org/maven2/"
-            }
             google()
             mavenCentral()
             jcenter()
-            
         }
         dependencies {
             classpath 'com.android.tools.build:gradle:4.2.2'

@@ -19,6 +19,7 @@ import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.views.scroll.ScrollEventType;
 
+import java.util.List;
 import java.util.Map;
 
 public class GeckoViewManager extends SimpleViewManager<View> {
@@ -80,6 +81,22 @@ public class GeckoViewManager extends SimpleViewManager<View> {
         }
         view.getSession().getSettings().setUserAgentOverride(mUserAgent);
     }
+
+    @ReactProp(name = "extensions")
+    public void setExtensions(GeckoViewExtended view, @Nullable ReadableArray extensionsArray) {
+        if (extensionsArray != null) {
+            for (int i = 0; i < extensionsArray.size(); i++) {
+                ReadableMap extensionMap = extensionsArray.getMap(i);
+                if (extensionMap != null) {
+                    String extension = extensionMap.getString("extension");
+                    String id = extensionMap.getString("id");
+                    // Initialize the extension using the extension and id
+                    view.initializeExtension(extension, id);
+                }
+            }
+        }
+    }
+
 
     @Override
     public Map getExportedCustomDirectEventTypeConstants() {

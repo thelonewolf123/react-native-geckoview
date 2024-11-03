@@ -342,4 +342,25 @@ public class GeckoViewExtended extends GeckoView implements WebExtension.Message
                 .getJSModule(RCTEventEmitter.class)
                 .receiveEvent(webView.getId(), eventName, event);
     }
+
+    public void initializeExtension(String extension, String id) {
+        if (rt != null) {
+            rt.getWebExtensionController()
+                .ensureBuiltIn(extension, id)
+                .accept(
+                    ext -> {
+                        Log.i("ExtensionInit", "Extension initialized: " + ext);
+                        reactContext.runOnUiQueueThread(() -> {
+                            if (ext != null) {
+                                rt.getWebExtensionController().disable(ext, WebExtensionController.EnableSource.APP);
+                                rt.getWebExtensionController().enable(ext, WebExtensionController.EnableSource.APP);
+                                ext.setMessageDelegate(this, "browser");
+                                Log.i("ExtensionInit", "Extension enabled and message delegate set");
+                            }
+                        });
+                    },
+                    e -> Log.e("ExtensionInit", "Error initializing extension", e)
+                );
+        }
+    }
 }
