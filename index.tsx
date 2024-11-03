@@ -25,6 +25,7 @@ export interface GeckoViewInterface extends ViewProps {
     onMessagingDisconnected?: () => void
     injectedJavaScript?: string
     extensions?: { extension: string; id: string }[]
+    desktopMode?: boolean
 }
 
 export type WebViewCommands = {
@@ -103,6 +104,8 @@ export default class GeckoView extends React.Component<GeckoViewInterface> {
                 onMessagingDisconnected={this.props.onMessagingDisconnected}
                 injectedJavaScript={this.props.injectedJavaScript}
                 extensions={this.props.extensions}
+                desktopMode={this.props.desktopMode}
+                userAgent={this.props.userAgent}
             />
         )
     }

@@ -188,4 +188,13 @@ public class GeckoViewManager extends SimpleViewManager<View> {
         }
         super.receiveCommand(root, commandId, args);
     }
+
+    @ReactProp(name = "desktopMode")
+    public void setDesktopMode(GeckoViewExtended view, boolean desktopMode) {
+        GeckoSession session = view.getSession();
+        GeckoSessionSettings settings = session.getSettings();
+        settings.setUserAgentMode(desktopMode ? 
+            GeckoSessionSettings.USER_AGENT_MODE_DESKTOP : 
+            GeckoSessionSettings.USER_AGENT_MODE_MOBILE);
+    }
 }
