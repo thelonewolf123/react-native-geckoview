@@ -28,6 +28,7 @@ public class GeckoViewManager extends SimpleViewManager<View> {
     public static final String REACT_CLASS = "GeckoView";
     private static GeckoRuntime mGeckoRuntime = null;
     private @Nullable  String mUserAgent;
+    private WmPermissionDelegate permissionDelegate;
 
     @Override
     public String getName() {
@@ -39,7 +40,10 @@ public class GeckoViewManager extends SimpleViewManager<View> {
         if (mGeckoRuntime == null) {
             mGeckoRuntime = GeckoRuntime.create(c);
         }
-        return new GeckoViewExtended(c,mGeckoRuntime);
+        GeckoViewExtended view = new GeckoViewExtended(c, mGeckoRuntime);
+        permissionDelegate = new WmPermissionDelegate();
+        view.getSession().setPermissionDelegate(permissionDelegate);
+        return view;
     }
 
     @ReactProp(name = "source")
@@ -198,5 +202,12 @@ public class GeckoViewManager extends SimpleViewManager<View> {
         settings.setUserAgentMode(desktopMode ? 
             GeckoSessionSettings.USER_AGENT_MODE_DESKTOP : 
             GeckoSessionSettings.USER_AGENT_MODE_MOBILE);
+    }
+
+    @ReactProp(name = "allowProtectedContent")
+    public void setAllowProtectedContent(GeckoViewExtended view, boolean allowed) {
+        if (permissionDelegate != null) {
+            permissionDelegate.setAllowProtectedContent(allowed);
+        }
     }
 }

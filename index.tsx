@@ -26,6 +26,7 @@ export interface GeckoViewInterface extends ViewProps {
     injectedJavaScript?: string
     extensions?: { extension: string; id: string }[]
     desktopMode?: boolean
+    allowProtectedContent?: boolean
 }
 
 export type WebViewCommands = {
@@ -106,6 +107,7 @@ export default class GeckoView extends React.Component<GeckoViewInterface> {
                 extensions={this.props.extensions}
                 desktopMode={this.props.desktopMode}
                 userAgent={this.props.userAgent}
+                allowProtectedContent={this.props.allowProtectedContent}
             />
         )
     }
