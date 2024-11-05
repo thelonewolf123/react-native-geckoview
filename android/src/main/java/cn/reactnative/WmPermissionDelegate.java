@@ -2,6 +2,7 @@ package cn.reactnative;
 
 import org.mozilla.geckoview.GeckoSession;
 import org.mozilla.geckoview.GeckoResult;
+import org.mozilla.geckoview.GeckoSession.PermissionDelegate.ContentPermission;
 
 public class WmPermissionDelegate implements GeckoSession.PermissionDelegate {
     private boolean allowProtectedContent = false;
@@ -12,15 +13,14 @@ public class WmPermissionDelegate implements GeckoSession.PermissionDelegate {
 
     @Override
     public GeckoResult<Integer> onContentPermissionRequest(
-        GeckoSession session,
-        ContentPermission perm
-    ) {
-        if (perm.permission == PERMISSION_MEDIA_KEY_SYSTEM_ACCESS) {
+            GeckoSession session,
+            ContentPermission perm) {
+        if (perm.permission == GeckoSession.PermissionDelegate.PERMISSION_MEDIA_KEY_SYSTEM_ACCESS) {
             if (allowProtectedContent) {
                 return GeckoResult.fromValue(ContentPermission.VALUE_ALLOW);
             }
             return GeckoResult.fromValue(ContentPermission.VALUE_DENY);
         }
-        return super.onContentPermissionRequest(session, perm);
+        return GeckoResult.fromValue(ContentPermission.VALUE_DENY);
     }
-} 
+}
